@@ -1,0 +1,15 @@
+{
+	"name": "@asciiroth/core",
+	"version": "0.0.1",
+	"description": "The Asciiroth core package for creating text-based games.",
+	"files": "lib/**/*",
+	"types": "lib/",
+	"main": "lib/index.js",
+	"scripts": {
+		"build": "npx tsc"
+	},
+	"devDependencies": {
+		"@types/node": "^12.6.8",
+		"typescript": "^3.5.3"
+	}
+}
