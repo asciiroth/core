@@ -11,19 +11,4 @@ import { Stage } from './Stage.class';
 import { Stages } from './Stages.class';
 import { World } from './World.class';
 import { Zone } from './Zone.class';
-
-export {
-    Ability,
-    AbilityBook,
-    Entity,
-    Faction,
-    Game,
-    Input,
-    Inventory,
-    Npc,
-    Player,
-    Stage,
-    Stages,
-    World,
-    Zone,
-}
+export { Ability, AbilityBook, Entity, Faction, Game, Input, Inventory, Npc, Player, Stage, Stages, World, Zone, };
