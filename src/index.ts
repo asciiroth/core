@@ -8,6 +8,7 @@ export { Input } from './Input.class';
 export { Location } from './Location.class';
 export { Inventory } from './Inventory.class';
 export { Npc } from './Npc.class';
+export { Pet } from './Pet.class';
 export { Player } from './Player.class';
 export { Quest } from './Quest.class';
 export { Race } from './Race.class';

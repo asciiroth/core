@@ -1,4 +1,4 @@
-import { Inventory, Npc, World, Race, Class, Zone, Game } from './';
+import { Inventory, Npc, World, Race, Class, Zone, Game, Pet } from './';
 interface PlayerProperties {
     xp?: number;
     name: string;
@@ -15,7 +15,7 @@ export declare class Player {
     name: string;
     race: Race;
     class: Class;
-    petName?: string;
+    pet: Pet;
     _spells: number[];
     private quests;
     coords: [number, number];

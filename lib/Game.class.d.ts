@@ -1,4 +1,4 @@
-import { World, Player, Stage, Stages } from './';
+import { World, Player, Stages } from './';
 export declare class Game {
     private _name;
     private _stages;
@@ -11,6 +11,7 @@ export declare class Game {
     readonly world: World;
     setPlayer(player: Player): void;
     readonly player: Player;
-    readonly stage: Stage;
+    readonly stage: string;
+    setStage(stageName: string): void;
     readonly stages: Stages;
 }

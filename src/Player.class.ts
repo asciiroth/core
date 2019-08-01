@@ -6,6 +6,7 @@ import {
     Class,
     Zone,
     Game,
+    Pet,
 } from './';
 
 interface PlayerProperties {
@@ -36,11 +37,10 @@ export class Player {
     public name: string;
     public race: Race; // Todo: RaceEnum
     public class: Class; // Todo: ClassEnum
-    public petName?: string; // For hunters maybe
+    public pet: Pet; // For hunters maybe
     public _spells: number[];
     private quests: any[]; // Need to just figure out the tiny detail of quests
     public coords: [number, number] = [0, 0];
-    // public world: World;
     public zone: Zone;
     public maxHp: number = 10;
     public hp: number = 10;

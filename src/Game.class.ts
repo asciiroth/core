@@ -30,8 +30,18 @@ export class Game {
         return this._player;
     }
 
-    public get stage(): Stage {
-        return this._stage;
+    public get stage(): string {
+        return this._stage.name;
+    }
+
+    public setStage(stageName: string): void {
+        const stage = this._stages.findStage(stageName);
+        if (stage) {
+            this._stage = stage;
+            return;
+        }
+
+        throw new Error(`Cannot find stage ${stageName}`);
     }
 
     public get stages(): Stages {

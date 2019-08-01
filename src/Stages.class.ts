@@ -16,6 +16,10 @@ export class Stages {
         delete this._stages[name];
     }
 
+    public findStage(name: string): Stage {
+        return this._stages[name];
+    }
+
     public get stages(): Stage[] {
         return Object.values(this._stages);
     }
