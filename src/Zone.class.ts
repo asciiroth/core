@@ -1,17 +1,19 @@
 import { Location } from './';
 
 interface ZoneOptions {
-	name: string;
-	grid: Location[][];
+    name: string;
+    grid: Location[][];
 }
 
 export class Zone {
-	public readonly name: string;
+    public readonly name: string;
     private grid: Location[][] = [[]];
 
     public constructor(options: ZoneOptions) {
-		this.name = options.name;
-        this.setGrid(options.grid);
+        this.name = options.name;
+        if (options.grid) {
+            this.setGrid(options.grid);
+        }
     }
 
     public setGrid(grid: Location[][]): void {

@@ -39,7 +39,7 @@ export declare class Player {
     }): void;
     action(action: {
         name: string;
-        data: object;
+        payload: object;
     }): void;
     setName(name: string): void;
     setRace(race: Race): void;

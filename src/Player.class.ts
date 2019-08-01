@@ -1,11 +1,11 @@
 import {
-	Inventory,
-	Npc,
-	World,
-	Race,
-	Class,
-	Zone,
-	Game,
+    Inventory,
+    Npc,
+    World,
+    Race,
+    Class,
+    Zone,
+    Game,
 } from './';
 
 interface PlayerProperties {
@@ -14,9 +14,9 @@ interface PlayerProperties {
     race?: Race;
     class?: Class;
     coords: [number, number];
-	zone: Zone;
+    zone: Zone;
     world: World,
-	game: Game,
+    game: Game,
 }
 
 interface PlayerAction {
@@ -41,37 +41,36 @@ export class Player {
     private quests: any[]; // Need to just figure out the tiny detail of quests
     public coords: [number, number] = [0, 0];
     // public world: World;
-	public zone: Zone;
+    public zone: Zone;
     public maxHp: number = 10;
     public hp: number = 10;
     public strength: number = 5;
     public defence: number = 5;
     public combatSelectedEnemy: Partial<Npc>;
     public completedIntroduction: boolean = false;
-	private _game: Game;
-	public actions: {
-		[name: string]: Function,
-	} = {
-		walk: (game: Game, payload: PlayerActionPayload) => {
-			switch (payload.direction || '') {
-				case 'north':
-					if (this.zone.areCoordsInGrid(this.coords[0], this.coords[1] + 1)) {
-	                    this.coords = [this.coords[0], this.coords[1] + 1];
-	                    return true;
-	                } else {
-	                    return false;
-	                }
-				case 'south':
-				if (this.zone.areCoordsInGrid(this.coords[0], this.coords[1] - 1)) {
-					this.coords = [this.coords[0], this.coords[1] - 1];
-	                    return true;
-	                } else {
-	                    return false;
-	                }
-			}
-			console.log(this, payload);
-		}
-	}
+    private _game: Game;
+    public actions: {
+        [name: string]: Function,
+    } = {
+            walk: (game: Game, payload: PlayerActionPayload) => {
+                switch (payload.direction || '') {
+                    case 'north':
+                        if (this.zone.areCoordsInGrid(this.coords[0], this.coords[1] + 1)) {
+                            this.coords = [this.coords[0], this.coords[1] + 1];
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    case 'south':
+                        if (this.zone.areCoordsInGrid(this.coords[0], this.coords[1] - 1)) {
+                            this.coords = [this.coords[0], this.coords[1] - 1];
+                            return true;
+                        } else {
+                            return false;
+                        }
+                }
+            }
+        }
 
     constructor(options: PlayerProperties) {
         Object.assign(this, options);
@@ -137,16 +136,16 @@ export class Player {
     //     }
     // }
 
-	public addAction(actionSkeleton: { name: string, action: Function}): void {
-		this.actions[actionSkeleton.name] = actionSkeleton.action;
-	}
+    public addAction(actionSkeleton: { name: string, action: Function }): void {
+        this.actions[actionSkeleton.name] = actionSkeleton.action;
+    }
 
-	public action(action: {
-		name: string,
-		data: object
-	}) {
-		this.actions[action.name](this._game, action.data);
-	}
+    public action(action: {
+        name: string,
+        payload: object
+    }) {
+        this.actions[action.name](this._game, action.payload);
+    }
 
     public setName(name: string) {
         this.name = name;
