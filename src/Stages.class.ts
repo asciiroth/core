@@ -9,7 +9,7 @@ export class Stages {
 
     public addStage(name: string): void {
         const stage = new Stage(name);
-        return this._stages[stage.name] = stage;
+        this._stages[stage.name] = stage;
     }
 
     public removeStage(name: string): void {

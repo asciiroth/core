@@ -1,52 +1,49 @@
-import { Inventory, Npc, World } from './';
-import { EntityDirections, EntityActions, Races, Classes } from '../enums';
-export interface SpeechTree {
-    [entityId: string]: string;
-}
-export interface SpeechBranch {
-}
+import { Inventory, Npc, World, Race, Class, Zone, Game } from './';
 interface PlayerProperties {
     xp?: number;
     name: string;
-    race: Races;
-    class: Classes;
+    race?: Race;
+    class?: Class;
     coords: [number, number];
+    zone: Zone;
     world: World;
-    speechCache?: SpeechTree;
-}
-interface PlayerAction {
-    action: EntityActions;
-    data: PlayerActionPayload;
-}
-interface PlayerActionPayload {
-    direction?: EntityDirections;
-    args?: string[];
-    hp?: number;
+    game: Game;
 }
 export declare class Player {
     inventory: Inventory;
     xp: number;
     name: string;
-    race: Races;
-    class: Classes;
+    race: Race;
+    class: Class;
     petName?: string;
     _spells: number[];
     private quests;
     coords: [number, number];
-    world: World;
+    zone: Zone;
     maxHp: number;
     hp: number;
     strength: number;
     defence: number;
     combatSelectedEnemy: Partial<Npc>;
     completedIntroduction: boolean;
+    private _game;
+    actions: {
+        [name: string]: Function;
+    };
     constructor(options: PlayerProperties);
     readonly spells: number[];
     hasCompleted(...questIds: number[]): boolean;
-    action(payload: PlayerAction): boolean;
+    addAction(actionSkeleton: {
+        name: string;
+        action: Function;
+    }): void;
+    action(action: {
+        name: string;
+        data: object;
+    }): void;
     setName(name: string): void;
-    setRace(race: Races): void;
-    setClass(playerClass: Classes): void;
+    setRace(race: Race): void;
+    setClass(playerClass: Class): void;
     removeHp(amount: number): number;
     addHp(amount?: number): number;
 }

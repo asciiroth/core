@@ -1,10 +1,17 @@
-export class Entity<T, U> {
+export interface EntityOptions {
+	id: string;
+    referenceName: string;
+    description: string;
+    actions: string[];
+}
+
+export class Entity {
     public id: string;
     public referenceName: string;
     public description: string;
-    public actions: T[];
+    public actions: string[];
 
-    constructor(options: U) {
+    constructor(options: EntityOptions) {
         Object.assign(this, options);
     }
 
@@ -12,7 +19,7 @@ export class Entity<T, U> {
         this.id = id;
     }
 
-    public hasAction(action: T): boolean {
+    public hasAction(action: string): boolean {
         if (this.actions.includes(action)) {
             return true;
         }

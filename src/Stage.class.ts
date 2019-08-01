@@ -1,5 +1,5 @@
 export class Stage {
     constructor(
-        private name: string = 'hello'
+        public readonly name: string = 'hello'
     ) { }
 }

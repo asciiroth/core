@@ -1,1 +1,1 @@
-{"version":3,"file":"Npc.class.js","sourceRoot":"","sources":["../src/Npc.class.ts"],"names":[],"mappings":";;AAAA;IACI,aACY,IAAsB;QAAtB,qBAAA,EAAA,cAAsB;QAAtB,SAAI,GAAJ,IAAI,CAAkB;IAC9B,CAAC;IACT,UAAC;AAAD,CAAC,AAJD,IAIC;AAJY,kBAAG"}
+{"version":3,"file":"Npc.class.js","sourceRoot":"","sources":["../src/Npc.class.ts"],"names":[],"mappings":";;;AAAA,uBAA4B;AAG5B;IAAyB,+BAAM;IAC3B,aACI,OAAsB;eAE5B,kBAAM,OAAO,CAAC;IACf,CAAC;IACF,UAAC;AAAD,CAAC,AAND,CAAyB,SAAM,GAM9B;AANY,kBAAG"}

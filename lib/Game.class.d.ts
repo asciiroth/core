@@ -7,9 +7,9 @@ export declare class Game {
     private _player;
     constructor(_name: string);
     readonly name: string;
-    addWorld(world: World): void;
+    setWorld(world: World): void;
     readonly world: World;
-    addPlayer(player: Player): void;
+    setPlayer(player: Player): void;
     readonly player: Player;
     readonly stage: Stage;
     readonly stages: Stages;

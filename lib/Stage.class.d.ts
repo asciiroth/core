@@ -1,4 +1,4 @@
 export declare class Stage {
-    private name;
+    readonly name: string;
     constructor(name?: string);
 }

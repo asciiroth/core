@@ -1,9 +1,15 @@
-export declare class Entity<T, U> {
+export interface EntityOptions {
     id: string;
     referenceName: string;
     description: string;
-    actions: T[];
-    constructor(options: U);
+    actions: string[];
+}
+export declare class Entity {
+    id: string;
+    referenceName: string;
+    description: string;
+    actions: string[];
+    constructor(options: EntityOptions);
     setId(id: string): void;
-    hasAction(action: T): boolean;
+    hasAction(action: string): boolean;
 }

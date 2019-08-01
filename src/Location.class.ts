@@ -1,39 +1,48 @@
-const generateId = (): string => {
-    return `e_${performance.now()}`;
-}
+import { Npc, Entity } from './';
 
-interface LocationProperties<T> {
+type EntityUnionType = Npc | Entity;
+
+interface LocationProperties {
     name: string;
-    description: string;
-    image: string;
-    entities: T[];
+    description?: string;
+    image?: string;
+    entities?: EntityUnionType[];
 }
 
-export class Location<T> {
+export class Location {
     public readonly name: string;
     public readonly description: string;
     public readonly image: string;
-    public entities: T[] = [];
+    public entities: EntityUnionType[] = [];
 
     constructor(
-        options: LocationProperties<T>
+        options: LocationProperties
     ) {
-        options.entities.forEach(entity => this.addEntity(entity));
+		this.name = options.name || '';
+		this.description = options.description || '';
+		this.image = options.description || '';
+		if (options.entities) {
+			options.entities.forEach(entity => this.addEntity(entity));
+		}
     }
 
     public addEntity(entity: any) {
-        entity.setId(generateId());
+        entity.setId(this.generateId());
         this.entities.push(entity);
     }
 
     public removeEntity(entityId: string) {
-        this.entities = this.entities.filter(({ id }) => id !== entityId);
+        this.entities = this.entities.filter(entity => entity.id !== entityId);
     }
 
-    public findEntity(name: string): Partial<T> {
+    public findEntity(name: string): Partial<EntityUnionType> {
         if (!name) {
             return null;
         }
-        return this.entities.find(({ referenceName }) => referenceName.toLowerCase() === name.toLowerCase());
+        return this.entities.find(entity => entity.referenceName.toLowerCase() === name.toLowerCase());
     }
+
+	private generateId(): string {
+	    return `e_${performance.now()}`;
+	}
 }

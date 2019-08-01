@@ -14,7 +14,7 @@ export class Game {
         return this._name;
     }
 
-    public addWorld(world: World): void {
+    public setWorld(world: World): void {
         this._world = world;
     }
 
@@ -22,7 +22,7 @@ export class Game {
         return this._world;
     }
 
-    public addPlayer(player: Player): void {
+    public setPlayer(player: Player): void {
         this._player = player;
     }
 

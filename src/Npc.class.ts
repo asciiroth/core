@@ -1,5 +1,10 @@
-export class Npc {
+import { Entity } from './';
+import { EntityOptions } from './Entity.class';
+
+export class Npc extends Entity {
     constructor(
-        private name: string = 'hello'
-    ) { }
+        options: EntityOptions
+    ) {
+		super(options);
+	}
 }
