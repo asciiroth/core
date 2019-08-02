@@ -1,17 +1,16 @@
-export interface EntityOptions {
-	id: string;
-    referenceName: string;
-    description: string;
-    actions: string[];
-}
+import { Game } from './';
+import { EntityProperties } from './interfaces';
 
 export class Entity {
     public id: string;
     public referenceName: string;
     public description: string;
-    public actions: string[];
+	public readonly _game: Game;
+    public actions: {
+		[name: string]: Function,
+	};
 
-    constructor(options: EntityOptions) {
+    constructor(options: EntityProperties) {
         Object.assign(this, options);
     }
 

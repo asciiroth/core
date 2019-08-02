@@ -1,5 +1,27 @@
 import { Entity } from './';
-import { EntityOptions } from './Entity.class';
+import { NpcProperties } from './interfaces';
+export interface NpcAction {
+    action: string;
+    data: NpcActionPayload;
+}
+export interface NpcActionPayload {
+    talkSubject?: string;
+    hp?: number;
+}
+export interface Speech {
+    [id: string]: string | Speech;
+}
 export declare class Npc extends Entity {
-    constructor(options: EntityOptions);
+    id: string;
+    speech: Speech;
+    hp: number;
+    strength: number;
+    defence: number;
+    friendly: boolean;
+    actions: {
+        [name: string]: Function;
+    };
+    constructor(options: NpcProperties);
+    action(action: string, payload: NpcAction): any;
+    removeHp(amount: number): number;
 }

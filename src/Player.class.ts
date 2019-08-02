@@ -16,8 +16,9 @@ interface PlayerProperties {
     class?: Class;
     coords: [number, number];
     zone: Zone;
-    world: World,
-    game: Game,
+    world: World;
+    game: Game;
+	onDeath: Function;
 }
 
 interface PlayerAction {
@@ -49,6 +50,9 @@ export class Player {
     public combatSelectedEnemy: Partial<Npc>;
     public completedIntroduction: boolean = false;
     private _game: Game;
+	public onDeath: Function = (game: Game) => {
+		console.log('u ded');
+	};
     public actions: {
         [name: string]: Function,
     } = {
@@ -61,9 +65,23 @@ export class Player {
                         } else {
                             return false;
                         }
+					case 'east':
+                        if (this.zone.areCoordsInGrid(this.coords[0] + 1, this.coords[1])) {
+                            this.coords = [this.coords[0] + 1, this.coords[1]];
+                            return true;
+                        } else {
+                            return false;
+                        }
                     case 'south':
                         if (this.zone.areCoordsInGrid(this.coords[0], this.coords[1] - 1)) {
                             this.coords = [this.coords[0], this.coords[1] - 1];
+                            return true;
+                        } else {
+                            return false;
+                        }
+					case 'south':
+                        if (this.zone.areCoordsInGrid(this.coords[0] - 1, this.coords[1])) {
+                            this.coords = [this.coords[0] - 1, this.coords[1]];
                             return true;
                         } else {
                             return false;
@@ -136,15 +154,12 @@ export class Player {
     //     }
     // }
 
-    public addAction(actionSkeleton: { name: string, action: Function }): void {
-        this.actions[actionSkeleton.name] = actionSkeleton.action;
+    public addAction(name: string, action: Function): void {
+        this.actions[name] = action;
     }
 
-    public action(action: {
-        name: string,
-        payload: object
-    }) {
-        this.actions[action.name](this._game, action.payload);
+    public action(action: string, payload: PlayerActionPayload) {
+        this.actions[action](this._game, payload);
     }
 
     public setName(name: string) {
@@ -154,6 +169,10 @@ export class Player {
     public setRace(race: Race) {
         this.race = race;
     }
+
+	public setZone(zone: Zone) {
+		this.zone = zone;
+	}
 
     public setClass(playerClass: Class) {
         this.class = playerClass;
