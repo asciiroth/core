@@ -1,15 +1,5 @@
-import { Inventory, Npc, World, Race, Class, Zone, Game, Pet } from './';
-interface PlayerProperties {
-    xp?: number;
-    name: string;
-    race?: Race;
-    class?: Class;
-    coords: [number, number];
-    zone: Zone;
-    world: World;
-    game: Game;
-    onDeath: Function;
-}
+import { Inventory, Npc, Race, Class, Zone, Pet } from './';
+import { PlayerProperties } from './interfaces';
 interface PlayerActionPayload {
     direction?: string;
     args?: string[];

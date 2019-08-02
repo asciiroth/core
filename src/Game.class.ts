@@ -1,10 +1,20 @@
-import { World, Player, Stage, Stages } from './';
+import {
+	World,
+	Player,
+	Stage,
+	Stages,
+	Entity,
+	Entities,
+	Npc
+} from './';
+import { PlayerProperties } from './interfaces';
 
 export class Game {
     private _stages: Stages = new Stages();
     private _stage: Stage;
     private _world: World;
-    private _player: Player
+    private _player: Player;
+	private _entities: Entities;
 
     constructor(
         private _name: string
@@ -14,6 +24,11 @@ export class Game {
         return this._name;
     }
 
+	public newWorld(name: string) {
+		this._world = new World(name);
+		return this._world;
+	}
+
     public setWorld(world: World): void {
         this._world = world;
     }
@@ -21,6 +36,16 @@ export class Game {
     public get world(): World {
         return this._world;
     }
+
+	public newPlayer(options: PlayerProperties) {
+		if (!this.world) {
+			throw new Error('Game must have a world before you can add a new player.');
+		}
+		options.world = this._world;
+		options.game = this;
+		this._player = new Player(options);
+		return this._player;
+	}
 
     public setPlayer(player: Player): void {
         this._player = player;
@@ -47,4 +72,10 @@ export class Game {
     public get stages(): Stages {
         return this._stages;
     }
+
+	public get entities(): Entities {
+		return this._entities;
+	}
+
+	// todo adds new entity and new npc
 }

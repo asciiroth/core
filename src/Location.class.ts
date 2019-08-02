@@ -7,6 +7,7 @@ interface LocationProperties {
     description?: string;
     image?: string;
     entities?: EntityUnionType[];
+	coords?: number[];
 }
 
 export class Location {
@@ -14,6 +15,7 @@ export class Location {
     public readonly description: string;
     public readonly image: string;
     public entities: EntityUnionType[] = [];
+	public readonly coords: number[];
 
     constructor(
         options: LocationProperties
@@ -21,6 +23,7 @@ export class Location {
 		this.name = options.name || '';
 		this.description = options.description || '';
 		this.image = options.description || '';
+		this.coords = options.coords || null;
 		if (options.entities) {
 			options.entities.forEach(entity => this.addEntity(entity));
 		}

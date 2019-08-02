@@ -5,12 +5,14 @@ interface LocationProperties {
     description?: string;
     image?: string;
     entities?: EntityUnionType[];
+    coords?: number[];
 }
 export declare class Location {
     readonly name: string;
     readonly description: string;
     readonly image: string;
     entities: EntityUnionType[];
+    readonly coords: number[];
     constructor(options: LocationProperties);
     addEntity(entity: any): void;
     removeEntity(entityId: string): void;

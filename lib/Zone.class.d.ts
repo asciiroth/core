@@ -1,7 +1,8 @@
 import { Location } from './';
 interface ZoneOptions {
     name: string;
-    grid: Location[][];
+    grid?: Location[][];
+    locations?: Location[];
 }
 export declare class Zone {
     readonly name: string;
