@@ -15,6 +15,7 @@ export class Game {
     private _world: World;
     private _player: Player;
 	private _entities: Entities;
+	private _output: string[];
 
     constructor(
         private _name: string
@@ -75,6 +76,14 @@ export class Game {
 
 	public get entities(): Entities {
 		return this._entities;
+	}
+
+	public get output(): string[] {
+		return this._output;
+	}
+
+	public addOutput(output: string): void {
+		this._output.push(output);
 	}
 
 	// todo adds new entity and new npc

@@ -7,6 +7,7 @@ export declare class Game {
     private _world;
     private _player;
     private _entities;
+    private _output;
     constructor(_name: string);
     readonly name: string;
     newWorld(name: string): World;
@@ -19,4 +20,6 @@ export declare class Game {
     setStage(stageName: string): void;
     readonly stages: Stages;
     readonly entities: Entities;
+    readonly output: string[];
+    addOutput(output: string): void;
 }
