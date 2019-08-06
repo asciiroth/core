@@ -1,4 +1,5 @@
 import { Zones, Zone } from './';
+import { ZoneProperties } from './interfaces';
 
 export class World {
 	private _zones: Zones = new Zones();
@@ -7,15 +8,17 @@ export class World {
 		private name: string
 	) {}
 
-	public get zones(): Zones {
-		return this._zones;
+	public get zones(): Zone[] {
+		return this._zones.zones;
 	}
 
 	public getZone(zone: Zone) {
 		return this._zones.findZone(zone);
 	}
 
-	public addZone(zone: Zone) {
-		this._zones.addZone(zone);
+	public newZone(zone: ZoneProperties): Zone {
+		const newZone = new Zone(zone);
+		this._zones.addZone(newZone);
+		return newZone;
 	}
 }

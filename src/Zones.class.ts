@@ -1,7 +1,7 @@
 import { Zone } from './';
 
 export class Zones {
-	private _zones: Zone[];
+	private _zones: Zone[] = [];
 
 	public get zones(): Zone[] {
 		return this._zones;

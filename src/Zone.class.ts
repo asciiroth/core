@@ -1,23 +1,20 @@
 import { Location } from './';
-
-interface ZoneOptions {
-    name: string;
-    grid?: Location[][];
-	locations?: Location[];
-}
+import { ZoneProperties } from './interfaces';
 
 export class Zone {
     public readonly name: string;
     private grid: Location[][] = [[]];
+	private locations: Location[] = [];
 
-    public constructor(options: ZoneOptions) {
+    public constructor(options: ZoneProperties) {
         this.name = options.name;
-		
+
         if (options.grid) {
             this.setGrid(options.grid);
         }
 
 		if (options.locations) {
+			this.locations = [...options.locations];
 			options.locations.forEach(location => {
 				if (!location.coords) {
 					throw new Error(`${ location.name } in zone: ${ this.name } must have coordinates unless specifying 'grid' option.`)

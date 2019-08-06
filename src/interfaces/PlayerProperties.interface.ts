@@ -13,7 +13,7 @@ export interface PlayerProperties {
     class?: Class;
     coords: [number, number];
     zone: Zone;
-    world: World;
+    world?: World;
     game?: Game;
-	onDeath: Function;
+	onDeath?: Function;
 }
