@@ -7,7 +7,7 @@ interface LocationProperties {
     description?: string;
     image?: string;
     entities?: EntityUnionType[];
-	coords?: number[];
+    coords?: number[];
 }
 
 export class Location {
@@ -15,18 +15,18 @@ export class Location {
     public readonly description: string;
     public readonly image: string;
     public entities: EntityUnionType[] = [];
-	public readonly coords: number[];
+    public readonly coords: number[];
 
     constructor(
         options: LocationProperties
     ) {
-		this.name = options.name || '';
-		this.description = options.description || '';
-		this.image = options.description || '';
-		this.coords = options.coords || null;
-		if (options.entities) {
-			options.entities.forEach(entity => this.addEntity(entity));
-		}
+        this.name = options.name || '';
+        this.description = options.description || '';
+        this.image = options.description || '';
+        this.coords = options.coords || null;
+        if (options.entities) {
+            options.entities.forEach(entity => this.addEntity(entity));
+        }
     }
 
     public addEntity(entity: any) {
@@ -42,10 +42,10 @@ export class Location {
         if (!name) {
             return null;
         }
-        return this.entities.find(entity => entity.referenceNames.map(name => name.toLowerCase()).includes(name.toLowerCase()));
+        return this.entities.find(entity => entity.referenceNames.filter(name => name.toLowerCase()).includes(name.toLowerCase()));
     }
 
-	private generateId(): string {
-	    return `e_${performance.now()}`;
-	}
+    private generateId(): string {
+        return `e_${performance.now()}`;
+    }
 }

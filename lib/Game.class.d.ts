@@ -1,5 +1,5 @@
-import { World, Player, Stages, Entities } from './';
-import { PlayerProperties } from './interfaces';
+import { World, Player, Stages, Entity, Entities, Npc } from './';
+import { PlayerProperties, EntityProperties, NpcProperties } from './interfaces';
 export declare class Game {
     private _name;
     private _stages;
@@ -22,4 +22,6 @@ export declare class Game {
     readonly entities: Entities;
     readonly output: string[];
     addOutput(output: string): void;
+    newEntity(options: EntityProperties): Entity | Npc;
+    newNpc(options: NpcProperties): Entity | Npc;
 }
