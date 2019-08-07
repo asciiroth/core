@@ -42,7 +42,7 @@ export class Location {
         if (!name) {
             return null;
         }
-        return this.entities.find(entity => entity.referenceName.toLowerCase() === name.toLowerCase());
+        return this.entities.find(entity => entity.referenceNames.map(name => name.toLowerCase()).includes(name.toLowerCase()));
     }
 
 	private generateId(): string {

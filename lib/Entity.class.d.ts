@@ -2,7 +2,8 @@ import { Game } from './';
 import { EntityProperties } from './interfaces';
 export declare class Entity {
     id: string;
-    referenceName: string;
+    referenceNames: string[];
+    name: string;
     description: string;
     readonly _game: Game;
     actions: {

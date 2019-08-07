@@ -24,4 +24,5 @@ export declare class Npc extends Entity {
     constructor(options: NpcProperties);
     action(action: string, payload: NpcAction): any;
     removeHp(amount: number): number;
+    addAction(name: string, action: Function): void;
 }

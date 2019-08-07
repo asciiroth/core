@@ -29,11 +29,16 @@ export class Npc extends Entity {
 			if (payload && payload.talkSubject) {
 				switch (payload.talkSubject) {
 					default:
-						return this.speech.default;
+						game.addOutput(<string>this.speech.default);
 				}
 			}
 
-			return `${ this.referenceName } doesn't seem to want to talk...`;
+			if (!payload && this.speech && this.speech.default) {
+				game.addOutput(<string>this.speech.default);
+			}
+
+			game.addOutput(`${ this.name } doesn't seem to want to talk...`);
+			return;
 		},
 		'attack': (game: Game, payload: NpcActionPayload) => {
 			this.removeHp(payload.hp);
@@ -51,5 +56,9 @@ export class Npc extends Entity {
 
     public removeHp(amount: number): number {
         return this.hp -= amount;
+    }
+
+	public addAction(name: string, action: Function): void {
+        this.actions[name] = action;
     }
 }

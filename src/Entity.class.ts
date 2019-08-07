@@ -3,7 +3,8 @@ import { EntityProperties } from './interfaces';
 
 export class Entity {
     public id: string;
-    public referenceName: string;
+    public referenceNames: string[];
+	public name: string;
     public description: string;
 	public readonly _game: Game;
     public actions: {

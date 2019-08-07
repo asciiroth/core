@@ -15,7 +15,7 @@ export class Game {
     private _world: World;
     private _player: Player;
 	private _entities: Entities;
-	private _output: string[];
+	private _output: string[] = [];
 
     constructor(
         private _name: string
