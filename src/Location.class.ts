@@ -4,6 +4,7 @@ type EntityUnionType = Npc | Entity;
 
 interface LocationProperties {
     name: string;
+    id?: number;
     description?: string;
     image?: string;
     entities?: EntityUnionType[];
@@ -12,6 +13,7 @@ interface LocationProperties {
 
 export class Location {
     public readonly name: string;
+    public readonly id: string;
     public readonly description: string;
     public readonly image: string;
     public entities: EntityUnionType[] = [];

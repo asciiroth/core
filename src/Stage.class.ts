@@ -1,5 +1,6 @@
 export class Stage {
     constructor(
-        public readonly name: string = 'hello'
+        public readonly name: string,
+        public readonly id?: string,
     ) { }
 }

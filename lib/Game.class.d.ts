@@ -1,5 +1,6 @@
-import { World, Player, Stages, Entity, Entities, Npc } from './';
+import { World, Player, Stage, Entity, Entities, Npc } from './';
 import { PlayerProperties, EntityProperties, NpcProperties } from './interfaces';
+import { BaseStore } from './stores/Base.store';
 export declare class Game {
     private _name;
     private _stages;
@@ -17,8 +18,9 @@ export declare class Game {
     setPlayer(player: Player): void;
     readonly player: Player;
     readonly stage: string;
-    setStage(stageName: string): void;
-    readonly stages: Stages;
+    addStage(name: string): void;
+    setStage(stage: Stage): void;
+    readonly stages: BaseStore<Stage>;
     readonly entities: Entities;
     readonly output: string[];
     addOutput(output: string): void;

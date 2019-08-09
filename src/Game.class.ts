@@ -12,9 +12,10 @@ import {
     EntityProperties,
     NpcProperties,
 } from './interfaces';
+import { BaseStore } from './stores/Base.store';
 
 export class Game {
-    private _stages: Stages = new Stages();
+    private _stages: BaseStore<Stage> = new BaseStore<Stage>();
     private _stage: Stage;
     private _world: World;
     private _player: Player;
@@ -64,17 +65,19 @@ export class Game {
         return this._stage.name;
     }
 
-    public setStage(stageName: string): void {
-        const stage = this._stages.findStage(stageName);
+    public addStage(name: string): void {
+        const stage = new Stage(name);
+        this._stages.add(stage);
+    }
+
+    public setStage(stage: Stage): void {
         if (stage) {
             this._stage = stage;
             return;
         }
-
-        throw new Error(`Cannot find stage ${stageName}`);
     }
 
-    public get stages(): Stages {
+    public get stages(): BaseStore<Stage> {
         return this._stages;
     }
 
