@@ -1,7 +1,7 @@
 import { Game } from './';
 import { EntityProperties } from './interfaces';
 export declare class Entity {
-    id: string | number;
+    id: string;
     referenceNames: string[];
     name: string;
     description: string;

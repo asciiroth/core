@@ -2,7 +2,7 @@ import { Game } from './';
 import { EntityProperties } from './interfaces';
 
 export class Entity {
-    public id: string | number;
+    public id: string;
     public referenceNames: string[];
     public name: string;
     public description: string;

@@ -2,9 +2,9 @@ import {
     World,
     Player,
     Stage,
-    Stages,
+    //Stages,
     Entity,
-    Entities,
+    // Entities,
     Npc
 } from './';
 import {
@@ -14,8 +14,28 @@ import {
 } from './interfaces';
 import { BaseStore } from './stores/Base.store';
 
+class Stages {
+	private _stages: BaseStore<Stage> = new BaseStore<Stage>();
+
+	public createStage(name: string): Stage {
+        const stage = new Stage(name);
+        this._stages.add(stage);
+		return stage;
+    }
+}
+
+class Entities {
+	private _entities: BaseStore<Entity> = new BaseStore<Entity>();
+
+	public createEntity(entityOptions: EntityProperties) {
+		const entity: Entity = new Entity(entityOptions);
+		this._entities.add(entity);
+		return entity;
+	}
+}
+
 export class Game {
-    private _stages: BaseStore<Stage> = new BaseStore<Stage>();
+    //private _stages: BaseStore<Stage> = new BaseStore<Stage>();
     private _stage: Stage;
     private _world: World;
     private _player: Player;
@@ -24,7 +44,9 @@ export class Game {
 
     constructor(
         private _name: string
-    ) { }
+    ) {
+		super();
+	}
 
     public get name(): string {
         return this._name;
@@ -48,7 +70,6 @@ export class Game {
             throw new Error('Game must have a world before you can add a new player.');
         }
         options.world = this._world;
-        options.game = this;
         this._player = new Player(options);
         return this._player;
     }
@@ -65,21 +86,19 @@ export class Game {
         return this._stage.name;
     }
 
-    public addStage(name: string): void {
-        const stage = new Stage(name);
-        this._stages.add(stage);
-    }
-
-    public setStage(stage: Stage): void {
-        if (stage) {
-            this._stage = stage;
-            return;
-        }
-    }
-
-    public get stages(): BaseStore<Stage> {
-        return this._stages;
-    }
+    // public addStage(name: string): Stage {
+    //     const stage = new Stage(name);
+    //     this._stages.add(stage);
+	// 	return stage;
+    // }
+	//
+    // public setStage(stage: Stage | string): void {
+	// 	this._stage = this._stages.find(stage);
+    // }
+	//
+    // public get stages(): BaseStore<Stage> {
+    //     return this._stages;
+    // }
 
     public get entities(): Entities {
         return this._entities;
