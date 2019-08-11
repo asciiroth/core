@@ -5,6 +5,7 @@ export declare class Zone {
     private grid;
     private locations;
     constructor(options: ZoneProperties);
+    addLocation(location: Location): void;
     setGrid(grid: Location[][]): void;
     getLocationAtCoords(x: number, y: number): Location;
     areCoordsInGrid(x: number, y: number): boolean;

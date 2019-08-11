@@ -15,7 +15,7 @@ export class Location {
     public readonly description: string;
     public readonly image: string;
     public entities: BaseStore<Npc | Entity> = new BaseStore<Npc | Entity>();
-    public readonly coords: number[];
+    private _coords: [number, number];
 
     constructor(
         options: LocationProperties
@@ -23,10 +23,18 @@ export class Location {
         this.name = options.name || '';
         this.description = options.description || '';
         this.image = options.description || '';
-        this.coords = options.coords || null;
+        this._coords = options.coords || null;
         if (options.entities) {
             this.entities.add(options.entities);
         }
+    }
+
+    public get coords(): [number, number] {
+        return this._coords;
+    }
+
+    public setCoords(x: number, y: number): void {
+        this._coords = [x, y];
     }
 
     // public addEntity(entity: EntityUnionType) {

@@ -7,6 +7,8 @@ export declare class Location {
     readonly description: string;
     readonly image: string;
     entities: BaseStore<Npc | Entity>;
-    readonly coords: number[];
+    private _coords;
     constructor(options: LocationProperties);
+    readonly coords: [number, number];
+    setCoords(x: number, y: number): void;
 }

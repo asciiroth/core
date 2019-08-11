@@ -14,6 +14,7 @@ import {
     EntityProperties,
     NpcProperties,
     LocationProperties,
+    ZoneProperties,
 } from './interfaces';
 import { BaseStore } from './stores/Base.store';
 
@@ -163,8 +164,8 @@ export class Game {
 
     // Zones
 
-    public newZone(name: string) {
-        const zone = new Zone(name);
+    public newZone(options: ZoneProperties) {
+        const zone = new Zone(options);
         this._zones.add(zone);
         return zone;
     }

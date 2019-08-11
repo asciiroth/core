@@ -1,5 +1,5 @@
 import { World, Player, Stage, Entity, Location, Zone } from './';
-import { PlayerProperties, EntityProperties, NpcProperties, LocationProperties } from './interfaces';
+import { PlayerProperties, EntityProperties, NpcProperties, LocationProperties, ZoneProperties } from './interfaces';
 import { BaseStore } from './stores/Base.store';
 export declare class Game {
     private _name;
@@ -25,7 +25,7 @@ export declare class Game {
     setWorld(world: World | string): void;
     readonly world: World;
     readonly worlds: BaseStore<World>;
-    newZone(name: string): any;
+    newZone(options: ZoneProperties): Zone;
     setZone(zone: Zone | string): void;
     readonly zones: BaseStore<Zone>;
     newLocation(options: LocationProperties): Location;

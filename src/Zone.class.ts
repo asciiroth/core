@@ -14,25 +14,40 @@ export class Zone {
         }
 
 		if (options.locations) {
-			this.locations = [...options.locations];
+			this.locations = options.locations;
 			options.locations.forEach(location => {
-				if (!location.coords) {
-					throw new Error(`${ location.name } in zone: ${ this.name } must have coordinates unless specifying 'grid' option.`)
-				}
-
-				const [x, y] = location.coords;
-
-				if (!this.grid[x]) {
-					this.grid[x] = [];
-				}
-
-				this.grid[x][y] = location;
+				this.addLocation(location);
 			})
 		}
     }
 
+    public addLocation(location: Location) {
+        if (!location.coords) {
+            throw new Error(`${ location.name } in zone: ${ this.name } must have coordinates unless specifying 'grid' option.`)
+        }
+
+        const [x, y] = location.coords;
+
+        if (!this.grid[x]) {
+            this.grid[x] = [];
+        }
+
+        this.grid[x][y] = location;
+    }
+
     public setGrid(grid: Location[][]): void {
         this.grid = grid;
+
+        for (let x = 0; x < grid.length; x++) {
+            for (let y = 0; y < grid.length; y++) {
+                if (grid[x][y]) {
+                    grid[x][y].setCoords(x, y);
+                }
+            }
+        }
+
+        const locations = grid.flat();
+        this.locations = locations;
     }
 
     public getLocationAtCoords(x: number, y: number): Location {
@@ -83,6 +98,8 @@ export class Zone {
         if (this.areCoordsInGrid(...directionCoords.west)) {
             directions.west = this.getLocationAtCoords(...directionCoords.west);
         }
+
+        console.log(this.grid);
 
         return directions;
     }

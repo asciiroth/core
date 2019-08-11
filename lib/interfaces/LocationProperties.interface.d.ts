@@ -5,5 +5,5 @@ export interface LocationProperties {
     description?: string;
     image?: string;
     entities?: (Npc | Entity)[];
-    coords?: number[];
+    coords?: [number, number];
 }
