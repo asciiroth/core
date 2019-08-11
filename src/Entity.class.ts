@@ -21,11 +21,6 @@ export class Entity {
             delete options.actions;
         }
         Object.assign(this, options);
-        this.setId(performance.now());
-    }
-
-    public setId(id: string | number) {
-        this.id = id;
     }
 
     public hasAction(action: string): boolean {

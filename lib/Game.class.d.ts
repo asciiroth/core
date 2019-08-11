@@ -1,29 +1,41 @@
-import { World, Player, Entity } from './';
-import { PlayerProperties, EntityProperties, NpcProperties } from './interfaces';
-declare class Entities {
-    private _entities;
-    createEntity(entityOptions: EntityProperties): Entity;
-}
+import { World, Player, Stage, Entity, Location, Zone } from './';
+import { PlayerProperties, EntityProperties, NpcProperties, LocationProperties } from './interfaces';
+import { BaseStore } from './stores/Base.store';
 export declare class Game {
     private _name;
-    private _stage;
-    private _world;
-    private _player;
+    private _stages;
+    private _zones;
+    private _worlds;
+    private _locations;
+    private _npcs;
     private _entities;
+    private _quests;
+    private _abilities;
+    private _player;
     private _output;
+    private _actions;
     constructor(_name: string);
     readonly name: string;
+    action(command: string, args: string[]): void;
+    readonly stage: string;
+    readonly stages: BaseStore<Stage>;
+    addStage(name: string): Stage;
+    setStage(stage: Stage | string): void;
     newWorld(name: string): World;
-    setWorld(world: World): void;
+    setWorld(world: World | string): void;
     readonly world: World;
+    readonly worlds: BaseStore<World>;
+    newZone(name: string): any;
+    setZone(zone: Zone | string): void;
+    readonly zones: BaseStore<Zone>;
+    newLocation(options: LocationProperties): Location;
+    readonly locations: BaseStore<Location>;
     newPlayer(options: PlayerProperties): Player;
     setPlayer(player: Player): void;
     readonly player: Player;
-    readonly stage: string;
-    readonly entities: Entities;
+    readonly entities: Entity[];
+    newEntity(options: EntityProperties): Entity | Entity[];
+    newNpc(options: NpcProperties): Entity | Entity[];
     readonly output: string[];
     addOutput(output: string): void;
-    newEntity(options: EntityProperties): any;
-    newNpc(options: NpcProperties): any;
 }
-export {};

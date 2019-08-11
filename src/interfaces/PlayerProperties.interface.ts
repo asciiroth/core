@@ -3,6 +3,7 @@ import {
 	Class,
 	Zone,
 	World,
+	Location,
 	Game
 } from '../';
 
@@ -12,8 +13,9 @@ export interface PlayerProperties {
     race?: Race;
     class?: Class;
     coords: [number, number];
-    zone: Zone;
+    zone?: Zone;
     world?: World;
+	location?: Location;
     game?: Game;
 	onDeath?: Function;
 }

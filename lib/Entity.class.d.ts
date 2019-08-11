@@ -10,7 +10,6 @@ export declare class Entity {
         [name: string]: Function;
     };
     constructor(options: EntityProperties);
-    setId(id: string | number): void;
     hasAction(action: string): boolean;
     action(action: string, payload: object): any;
     addAction(name: string, action: Function): void;

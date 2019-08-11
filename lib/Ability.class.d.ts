@@ -1,4 +1,5 @@
 export declare class Ability {
-    private name;
+    readonly name: string;
+    readonly id: string;
     constructor(name?: string);
 }

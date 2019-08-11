@@ -1,4 +1,5 @@
 export declare class Quest {
-    private name;
+    readonly name: string;
+    readonly id: string;
     constructor(name?: string);
 }

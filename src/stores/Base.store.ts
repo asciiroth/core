@@ -5,17 +5,20 @@ interface IItem {
 
 export class BaseStore<T extends IItem> {
     private _items: T[] = [];
+    private _activeItem: T;
 
-    constructor(items?: T[]) {
+    constructor(items?: T | T[]) {
         if (items) {
-            this._items = [
-                ...items,
-            ];
+            this.add(items);
         }
     }
 
     public get items() {
         return this._items;
+    }
+
+    public get active(): T {
+        return this._activeItem;
     }
 
     public find(item: T | string) {
@@ -46,7 +49,10 @@ export class BaseStore<T extends IItem> {
     }
 
     public addSingleItem(item: T) {
-        item.id = this.generateId();
+        if (!item.id) {
+            item.id = this.generateId();
+        }
+
         this._items.push(item);
         return item;
     }
@@ -63,6 +69,10 @@ export class BaseStore<T extends IItem> {
 
             return item;
         })
+    }
+
+    public setActive(item: T | string): void {
+        this._activeItem = this.find(item);
     }
 
     private generateId(): string {

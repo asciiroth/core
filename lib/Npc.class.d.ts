@@ -13,14 +13,11 @@ export interface Speech {
 }
 export declare class Npc extends Entity {
     id: string;
-    speech: Speech;
     hp: number;
     strength: number;
     defence: number;
     friendly: boolean;
-    actions: {
-        [name: string]: Function;
-    };
+    speech: Speech;
     constructor(options: NpcProperties);
     removeHp(amount: number): number;
 }

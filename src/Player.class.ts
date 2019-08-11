@@ -32,6 +32,8 @@ export class Player {
     private quests: any[]; // Need to just figure out the tiny detail of quests
     public coords: [number, number] = [0, 0];
     public zone: Zone;
+    public world: World;
+    public location: Location;
     public maxHp: number = 10;
     public hp: number = 10;
     public strength: number = 5;
@@ -42,42 +44,42 @@ export class Player {
 	public onDeath: Function = (game: Game) => {
 		console.log('u ded');
 	};
-    public actions: {
-        [name: string]: Function,
-    } = {
-            walk: (game: Game, payload: PlayerActionPayload) => {
-                switch (payload.direction || '') {
-                    case 'north':
-                        if (this.zone.areCoordsInGrid(this.coords[0], this.coords[1] + 1)) {
-                            this.coords = [this.coords[0], this.coords[1] + 1];
-                            return true;
-                        } else {
-                            return false;
-                        }
-					case 'east':
-                        if (this.zone.areCoordsInGrid(this.coords[0] + 1, this.coords[1])) {
-                            this.coords = [this.coords[0] + 1, this.coords[1]];
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    case 'south':
-                        if (this.zone.areCoordsInGrid(this.coords[0], this.coords[1] - 1)) {
-                            this.coords = [this.coords[0], this.coords[1] - 1];
-                            return true;
-                        } else {
-                            return false;
-                        }
-					case 'south':
-                        if (this.zone.areCoordsInGrid(this.coords[0] - 1, this.coords[1])) {
-                            this.coords = [this.coords[0] - 1, this.coords[1]];
-                            return true;
-                        } else {
-                            return false;
-                        }
-                }
-            }
-        }
+    // public actions: {
+    //     [name: string]: Function,
+    // } = {
+    //         walk: (game: Game, payload: PlayerActionPayload) => {
+    //             switch (payload.direction || '') {
+    //                 case 'north':
+    //                     if (this.zone.areCoordsInGrid(this.coords[0], this.coords[1] + 1)) {
+    //                         this.coords = [this.coords[0], this.coords[1] + 1];
+    //                         return true;
+    //                     } else {
+    //                         return false;
+    //                     }
+	// 				case 'east':
+    //                     if (this.zone.areCoordsInGrid(this.coords[0] + 1, this.coords[1])) {
+    //                         this.coords = [this.coords[0] + 1, this.coords[1]];
+    //                         return true;
+    //                     } else {
+    //                         return false;
+    //                     }
+    //                 case 'south':
+    //                     if (this.zone.areCoordsInGrid(this.coords[0], this.coords[1] - 1)) {
+    //                         this.coords = [this.coords[0], this.coords[1] - 1];
+    //                         return true;
+    //                     } else {
+    //                         return false;
+    //                     }
+	// 				case 'south':
+    //                     if (this.zone.areCoordsInGrid(this.coords[0] - 1, this.coords[1])) {
+    //                         this.coords = [this.coords[0] - 1, this.coords[1]];
+    //                         return true;
+    //                     } else {
+    //                         return false;
+    //                     }
+    //             }
+    //         }
+    //     }
 
     constructor(options: PlayerProperties) {
         Object.assign(this, options);
@@ -98,13 +100,13 @@ export class Player {
         }, true);
     }
 
-    public addAction(name: string, action: Function): void {
-        this.actions[name] = action;
-    }
-
-    public action(action: string, payload: PlayerActionPayload) {
-        this.actions[action](this._game, payload);
-    }
+    // public addAction(name: string, action: Function): void {
+    //     this.actions[name] = action;
+    // }
+    //
+    // public action(action: string, payload: PlayerActionPayload) {
+    //     this.actions[action](this._game, payload);
+    // }
 
     public setName(name: string) {
         this.name = name;

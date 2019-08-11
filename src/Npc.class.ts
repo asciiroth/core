@@ -17,33 +17,36 @@ export interface Speech {
 
 export class Npc extends Entity {
     public id: string;
-    public speech: Speech;
     public hp: number = 5;
     public strength: number = 5;
     public defence: number = 5;
     public friendly: boolean = true;
-    public actions: {
-        [name: string]: Function,
-    } = {
-            'talk': (game: Game, payload?: NpcActionPayload) => {
-                if (payload && payload.talkSubject) {
-                    switch (payload.talkSubject) {
-                        default:
-                            game.addOutput(<string>this.speech.default);
-                    }
-                }
-
-                if (!payload && this.speech && this.speech.default) {
-                    game.addOutput(<string>this.speech.default);
-                }
-
-                game.addOutput(`${this.name} doesn't seem to want to talk...`);
-                return;
-            },
-            'attack': (game: Game, payload: NpcActionPayload) => {
-                this.removeHp(payload.hp);
-            }
-        }
+    public speech: Speech = {
+        default: 'Hello there',
+    };
+    
+    // public actions: {
+    //     [name: string]: Function,
+    // } = {
+    //         'talk': (game: Game, payload?: NpcActionPayload) => {
+    //             if (payload && payload.talkSubject) {
+    //                 switch (payload.talkSubject) {
+    //                     default:
+    //                         game.addOutput(<string>this.speech.default);
+    //                 }
+    //             }
+    //
+    //             if (!payload && this.speech && this.speech.default) {
+    //                 game.addOutput(<string>this.speech.default);
+    //             }
+    //
+    //             game.addOutput(`${this.name} doesn't seem to want to talk...`);
+    //             return;
+    //         },
+    //         'attack': (game: Game, payload: NpcActionPayload) => {
+    //             this.removeHp(payload.hp);
+    //         }
+    //     }
 
     constructor(options: NpcProperties) {
         super(options);

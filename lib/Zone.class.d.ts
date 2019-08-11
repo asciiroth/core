@@ -8,5 +8,10 @@ export declare class Zone {
     setGrid(grid: Location[][]): void;
     getLocationAtCoords(x: number, y: number): Location;
     areCoordsInGrid(x: number, y: number): boolean;
-    getCurrentAvailableDirections(x: number, y: number): string[];
+    getAvailableDirections(x: number, y: number): {
+        north?: Location;
+        east?: Location;
+        south?: Location;
+        west?: Location;
+    };
 }

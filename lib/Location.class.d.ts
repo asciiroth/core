@@ -1,24 +1,12 @@
 import { Npc, Entity } from './';
-declare type EntityUnionType = Npc | Entity;
-interface LocationProperties {
-    name: string;
-    id?: number;
-    description?: string;
-    image?: string;
-    entities?: EntityUnionType[];
-    coords?: number[];
-}
+import { LocationProperties } from './interfaces';
+import { BaseStore } from './stores/Base.store';
 export declare class Location {
     readonly name: string;
     readonly id: string;
     readonly description: string;
     readonly image: string;
-    entities: EntityUnionType[];
+    entities: BaseStore<Npc | Entity>;
     readonly coords: number[];
     constructor(options: LocationProperties);
-    addEntity(entity: any): void;
-    removeEntity(entityId: string): void;
-    findEntity(name: string): Partial<EntityUnionType>;
-    private generateId;
 }
-export {};

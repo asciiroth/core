@@ -1,10 +1,5 @@
-import { Inventory, Npc, Race, Class, Zone, Pet } from './';
+import { Inventory, Npc, World, Race, Class, Zone, Pet } from './';
 import { PlayerProperties } from './interfaces';
-interface PlayerActionPayload {
-    direction?: string;
-    args?: string[];
-    hp?: number;
-}
 export declare class Player {
     inventory: Inventory;
     xp: number;
@@ -16,6 +11,8 @@ export declare class Player {
     private quests;
     coords: [number, number];
     zone: Zone;
+    world: World;
+    location: Location;
     maxHp: number;
     hp: number;
     strength: number;
@@ -24,14 +21,9 @@ export declare class Player {
     completedIntroduction: boolean;
     private _game;
     onDeath: Function;
-    actions: {
-        [name: string]: Function;
-    };
     constructor(options: PlayerProperties);
     readonly spells: number[];
     hasCompleted(...questIds: number[]): boolean;
-    addAction(name: string, action: Function): void;
-    action(action: string, payload: PlayerActionPayload): void;
     setName(name: string): void;
     setRace(race: Race): void;
     setZone(zone: Zone): void;
@@ -39,4 +31,3 @@ export declare class Player {
     removeHp(amount: number): number;
     addHp(amount?: number): number;
 }
-export {};

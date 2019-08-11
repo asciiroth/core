@@ -1,75 +1,200 @@
 import {
+    Ability,
     World,
     Player,
     Stage,
-    //Stages,
     Entity,
-    // Entities,
-    Npc
+    Location,
+    Quest,
+    Npc,
+    Zone,
 } from './';
 import {
     PlayerProperties,
     EntityProperties,
     NpcProperties,
+    LocationProperties,
 } from './interfaces';
 import { BaseStore } from './stores/Base.store';
 
-class Stages {
-	private _stages: BaseStore<Stage> = new BaseStore<Stage>();
-
-	public createStage(name: string): Stage {
-        const stage = new Stage(name);
-        this._stages.add(stage);
-		return stage;
-    }
-}
-
-class Entities {
-	private _entities: BaseStore<Entity> = new BaseStore<Entity>();
-
-	public createEntity(entityOptions: EntityProperties) {
-		const entity: Entity = new Entity(entityOptions);
-		this._entities.add(entity);
-		return entity;
-	}
-}
+// class Stages {
+// 	private _stages: BaseStore<Stage> = new BaseStore<Stage>();
+//
+// 	public createStage(name: string): Stage {
+//         const stage = new Stage(name);
+//         this._stages.add(stage);
+// 		return stage;
+//     }
+// }
+//
+// class Entities {
+// 	private _entities: BaseStore<Entity> = new BaseStore<Entity>();
+//
+// 	public createEntity(entityOptions: EntityProperties) {
+// 		const entity: Entity = new Entity(entityOptions);
+// 		this._entities.add(entity);
+// 		return entity;
+// 	}
+// }
 
 export class Game {
-    //private _stages: BaseStore<Stage> = new BaseStore<Stage>();
-    private _stage: Stage;
-    private _world: World;
+    private _stages: BaseStore<Stage> = new BaseStore<Stage>();
+    private _zones: BaseStore<Zone> = new BaseStore<Zone>();
+    private _worlds: BaseStore<World> = new BaseStore<World>();
+    private _locations: BaseStore<Location> = new BaseStore<Location>();
+    private _npcs: BaseStore<Npc> = new BaseStore<Npc>();
+    private _entities: BaseStore<Entity> = new BaseStore<Entity>();
+    private _quests: BaseStore<Quest> = new BaseStore<Quest>();
+    private _abilities: BaseStore<Ability> = new BaseStore<Ability>();
     private _player: Player;
-    private _entities: Entities = new Entities();
     private _output: string[] = [];
+    private _actions = {
+        talk: (args: string[]): void => {
+            // args will be something like ['abby']
+            const [ name, subject ] = args;
+
+            if (!name) {
+                return this.addOutput('Who would you like to talk to?');
+            }
+
+            const target: Npc = this._npcs.find(name);
+            if (target.speech[subject]) {
+                return this.addOutput(<string>target.speech[subject]);
+            }
+
+            this.addOutput(<string>target.speech.default);
+        },
+        walk: (args: string[]) => {
+            const [ direction ] = args;
+            if (!direction) {
+                return this.addOutput('Which direction would you like to walk?');
+            }
+
+            const availableDirections: any = this._player.zone.getAvailableDirections(...this._player.coords);
+
+            console.log(availableDirections);
+
+            // switch (direction || '') {
+            //     case 'north':
+            //         if (this._player.zone.areCoordsInGrid(this.coords[0], this.coords[1] + 1)) {
+            //             this.coords = [this.coords[0], this.coords[1] + 1];
+            //             return true;
+            //         } else {
+            //             return false;
+            //         }
+            //     case 'east':
+            //         if (this._player.zone.areCoordsInGrid(this.coords[0] + 1, this.coords[1])) {
+            //             this.coords = [this.coords[0] + 1, this.coords[1]];
+            //             return true;
+            //         } else {
+            //             return false;
+            //         }
+            //     case 'south':
+            //         if (this._player.zone.areCoordsInGrid(this.coords[0], this.coords[1] - 1)) {
+            //             this.coords = [this.coords[0], this.coords[1] - 1];
+            //             return true;
+            //         } else {
+            //             return false;
+            //         }
+            //     case 'south':
+            //         if (this._player.zone.areCoordsInGrid(this.coords[0] - 1, this.coords[1])) {
+            //             this.coords = [this.coords[0] - 1, this.coords[1]];
+            //             return true;
+            //         } else {
+            //             return false;
+            //         }
+            // }
+        }
+    }
 
     constructor(
         private _name: string
     ) {
-		super();
+		// super();
 	}
 
     public get name(): string {
         return this._name;
     }
 
-    public newWorld(name: string) {
-        this._world = new World(name);
-        return this._world;
+    public action(command: string, args: string[]): void {
+        this._actions[command](args);
     }
 
-    public setWorld(world: World): void {
-        this._world = world;
+    // Stages
+
+    public get stage(): string {
+        return this._stages.active.name;
+    }
+
+    public get stages(): BaseStore<Stage> {
+        return this._stages;
+    }
+
+    public addStage(name: string): Stage {
+        const stage = new Stage(name);
+        this._stages.add(stage);
+		return stage;
+    }
+
+    public setStage(stage: Stage | string): void {
+		this._stages.setActive(stage);
+    }
+
+    // Worlds
+
+    public newWorld(name: string) {
+        const world = new World(name);
+        this._worlds.add(world);
+        return world;
+    }
+
+    public setWorld(world: World | string): void {
+        this._worlds.setActive(world);
     }
 
     public get world(): World {
-        return this._world;
+        return this._worlds.active;
     }
 
+    public get worlds() {
+        return this._worlds;
+    }
+
+    // Zones
+
+    public newZone(name: string) {
+        const zone = new Zone(name);
+        this._zones.add(zone);
+        return zone;
+    }
+
+    public setZone(zone: Zone | string): void {
+        this._zones.setActive(zone);
+    }
+
+    public get zones() {
+        return this._zones;
+    }
+
+    // Locations
+
+    public newLocation(options: LocationProperties): Location {
+        const location = new Location(options);
+        this._locations.add(location);
+        return location;
+    }
+
+    public get locations() {
+        return this._locations;
+    }
+
+    // Player
+
     public newPlayer(options: PlayerProperties) {
-        if (!this.world) {
+        if (!options.world) {
             throw new Error('Game must have a world before you can add a new player.');
         }
-        options.world = this._world;
         this._player = new Player(options);
         return this._player;
     }
@@ -82,47 +207,35 @@ export class Game {
         return this._player;
     }
 
-    public get stage(): string {
-        return this._stage.name;
+    // Entities
+
+    public get entities(): Entity[] {
+        return this._entities.items;
     }
 
-    // public addStage(name: string): Stage {
-    //     const stage = new Stage(name);
-    //     this._stages.add(stage);
-	// 	return stage;
-    // }
-	//
-    // public setStage(stage: Stage | string): void {
-	// 	this._stage = this._stages.find(stage);
-    // }
-	//
-    // public get stages(): BaseStore<Stage> {
-    //     return this._stages;
-    // }
-
-    public get entities(): Entities {
-        return this._entities;
+    public newEntity(options: EntityProperties) {
+        return this._entities.add( new Entity({
+            ...options,
+            _game: this,
+        }));
     }
+
+    public newNpc(options: NpcProperties) {
+        return this._entities.add(new Npc({
+            ...options,
+            _game: this,
+        }));
+    }
+
+    // Output
 
     public get output(): string[] {
         return this._output;
     }
 
+
     public addOutput(output: string): void {
         this._output.push(output);
     }
 
-    public newEntity(options: EntityProperties) {
-        return this._entities.addEntity({
-            ...options,
-            _game: this,
-        });
-    }
-
-    public newNpc(options: NpcProperties) {
-        return this._entities.addNpc({
-            ...options,
-            _game: this,
-        });
-    }
 }

@@ -1,5 +1,4 @@
 export { Ability } from './Ability.class';
-export { AbilityBook } from './AbilityBook.class';
 export { Class } from './Class.class';
 export { Entity } from './Entity.class';
 export { Entities } from './Entities.class';
