@@ -2,6 +2,7 @@ import {
     Inventory,
     Npc,
     World,
+    Location,
     Race,
     Class,
     Zone,
@@ -41,9 +42,9 @@ export class Player {
     public combatSelectedEnemy: Partial<Npc>;
     public completedIntroduction: boolean = false;
     private _game: Game;
-	public onDeath: Function = (game: Game) => {
-		console.log('u ded');
-	};
+    public onDeath: Function = (game: Game) => {
+        console.log('u ded');
+    };
     // public actions: {
     //     [name: string]: Function,
     // } = {
@@ -56,7 +57,7 @@ export class Player {
     //                     } else {
     //                         return false;
     //                     }
-	// 				case 'east':
+    // 				case 'east':
     //                     if (this.zone.areCoordsInGrid(this.coords[0] + 1, this.coords[1])) {
     //                         this.coords = [this.coords[0] + 1, this.coords[1]];
     //                         return true;
@@ -70,7 +71,7 @@ export class Player {
     //                     } else {
     //                         return false;
     //                     }
-	// 				case 'south':
+    // 				case 'south':
     //                     if (this.zone.areCoordsInGrid(this.coords[0] - 1, this.coords[1])) {
     //                         this.coords = [this.coords[0] - 1, this.coords[1]];
     //                         return true;
@@ -83,6 +84,10 @@ export class Player {
 
     constructor(options: PlayerProperties) {
         Object.assign(this, options);
+
+        if (options.location && !options.coords) {
+            this.coords = options.location.coords;
+        }
     }
 
     public get spells() {
@@ -116,9 +121,14 @@ export class Player {
         this.race = race;
     }
 
-	public setZone(zone: Zone) {
-		this.zone = zone;
-	}
+    public setZone(zone: Zone) {
+        this.zone = zone;
+    }
+
+    public setLocation(location: Location) {
+        this.location = location;
+        this.coords = location.coords;
+    }
 
     public setClass(playerClass: Class) {
         this.class = playerClass;

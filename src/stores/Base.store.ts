@@ -1,6 +1,6 @@
 interface IItem {
     id?: string;
-	name: string;
+    name: string;
 }
 
 export class BaseStore<T extends IItem> {
@@ -22,17 +22,17 @@ export class BaseStore<T extends IItem> {
     }
 
     public find(item: T | string) {
-		if (typeof item === 'string') {
-			return this._items.find(({ name }) => name === item);
-		}
+        if (typeof item === 'string') {
+            return this._items.find(({ name }) => name.toLowerCase() === item);
+        }
 
         return this._items.find(({ id }) => id === item.id);
     }
 
     public findIndex(item: T): number {
-		if (typeof item === 'string' || typeof item === 'number') {
-			return this._items.findIndex(({ name }) => name === item);
-		}
+        if (typeof item === 'string' || typeof item === 'number') {
+            return this._items.findIndex(({ name }) => name === item);
+        }
 
         return this._items.findIndex(({ id }) => id === item.id);
     }

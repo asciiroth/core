@@ -1,4 +1,4 @@
-import { Inventory, Npc, World, Race, Class, Zone, Pet } from './';
+import { Inventory, Npc, World, Location, Race, Class, Zone, Pet } from './';
 import { PlayerProperties } from './interfaces';
 export declare class Player {
     inventory: Inventory;
@@ -27,6 +27,7 @@ export declare class Player {
     setName(name: string): void;
     setRace(race: Race): void;
     setZone(zone: Zone): void;
+    setLocation(location: Location): void;
     setClass(playerClass: Class): void;
     removeHp(amount: number): number;
     addHp(amount?: number): number;

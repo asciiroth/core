@@ -52,13 +52,18 @@ export class Game {
     private _actions = {
         talk: (args: string[]): void => {
             // args will be something like ['abby']
-            const [ name, subject ] = args;
+            const [name, subject] = args.map(item => item.toLowerCase());
 
             if (!name) {
                 return this.addOutput('Who would you like to talk to?');
             }
 
-            const target: Npc = this._npcs.find(name);
+            const target: Npc = <Npc>this.player.location.entities.find(name);
+
+            if (!target) {
+                return this.addOutput(`Cannot find ${name}`);
+            }
+
             if (target.speech[subject]) {
                 return this.addOutput(<string>target.speech[subject]);
             }
@@ -66,53 +71,26 @@ export class Game {
             this.addOutput(<string>target.speech.default);
         },
         walk: (args: string[]) => {
-            const [ direction ] = args;
+            const [direction] = args;
             if (!direction) {
                 return this.addOutput('Which direction would you like to walk?');
             }
 
             const availableDirections: any = this._player.zone.getAvailableDirections(...this._player.coords);
 
-            console.log(availableDirections);
+            if (availableDirections[direction]) {
+                return this._player.setLocation(availableDirections[direction]);
+            }
 
-            // switch (direction || '') {
-            //     case 'north':
-            //         if (this._player.zone.areCoordsInGrid(this.coords[0], this.coords[1] + 1)) {
-            //             this.coords = [this.coords[0], this.coords[1] + 1];
-            //             return true;
-            //         } else {
-            //             return false;
-            //         }
-            //     case 'east':
-            //         if (this._player.zone.areCoordsInGrid(this.coords[0] + 1, this.coords[1])) {
-            //             this.coords = [this.coords[0] + 1, this.coords[1]];
-            //             return true;
-            //         } else {
-            //             return false;
-            //         }
-            //     case 'south':
-            //         if (this._player.zone.areCoordsInGrid(this.coords[0], this.coords[1] - 1)) {
-            //             this.coords = [this.coords[0], this.coords[1] - 1];
-            //             return true;
-            //         } else {
-            //             return false;
-            //         }
-            //     case 'south':
-            //         if (this._player.zone.areCoordsInGrid(this.coords[0] - 1, this.coords[1])) {
-            //             this.coords = [this.coords[0] - 1, this.coords[1]];
-            //             return true;
-            //         } else {
-            //             return false;
-            //         }
-            // }
+            return this.addOutput('Cannot move in that direction');
         }
     }
 
     constructor(
         private _name: string
     ) {
-		// super();
-	}
+        // super();
+    }
 
     public get name(): string {
         return this._name;
@@ -135,11 +113,11 @@ export class Game {
     public addStage(name: string): Stage {
         const stage = new Stage(name);
         this._stages.add(stage);
-		return stage;
+        return stage;
     }
 
     public setStage(stage: Stage | string): void {
-		this._stages.setActive(stage);
+        this._stages.setActive(stage);
     }
 
     // Worlds
@@ -215,16 +193,14 @@ export class Game {
     }
 
     public newEntity(options: EntityProperties) {
-        return this._entities.add( new Entity({
+        return this._entities.add(new Entity({
             ...options,
-            _game: this,
         }));
     }
 
     public newNpc(options: NpcProperties) {
         return this._entities.add(new Npc({
             ...options,
-            _game: this,
         }));
     }
 

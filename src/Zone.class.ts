@@ -4,7 +4,7 @@ import { ZoneProperties } from './interfaces';
 export class Zone {
     public readonly name: string;
     private grid: Location[][] = [[]];
-	private locations: Location[] = [];
+    private locations: Location[] = [];
 
     public constructor(options: ZoneProperties) {
         this.name = options.name;
@@ -13,17 +13,17 @@ export class Zone {
             this.setGrid(options.grid);
         }
 
-		if (options.locations) {
-			this.locations = options.locations;
-			options.locations.forEach(location => {
-				this.addLocation(location);
-			})
-		}
+        if (options.locations) {
+            this.locations = options.locations;
+            options.locations.forEach(location => {
+                this.addLocation(location);
+            })
+        }
     }
 
     public addLocation(location: Location) {
         if (!location.coords) {
-            throw new Error(`${ location.name } in zone: ${ this.name } must have coordinates unless specifying 'grid' option.`)
+            throw new Error(`${location.name} in zone: ${this.name} must have coordinates unless specifying 'grid' option.`)
         }
 
         const [x, y] = location.coords;
@@ -39,7 +39,7 @@ export class Zone {
         this.grid = grid;
 
         for (let x = 0; x < grid.length; x++) {
-            for (let y = 0; y < grid.length; y++) {
+            for (let y = 0; y < grid[x].length; y++) {
                 if (grid[x][y]) {
                     grid[x][y].setCoords(x, y);
                 }
@@ -98,8 +98,6 @@ export class Zone {
         if (this.areCoordsInGrid(...directionCoords.west)) {
             directions.west = this.getLocationAtCoords(...directionCoords.west);
         }
-
-        console.log(this.grid);
 
         return directions;
     }
