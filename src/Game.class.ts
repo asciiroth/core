@@ -16,27 +16,8 @@ import {
     LocationProperties,
     ZoneProperties,
 } from './interfaces';
+import { Utils } from './utils/Utils.class';
 import { BaseStore } from './stores/Base.store';
-
-// class Stages {
-// 	private _stages: BaseStore<Stage> = new BaseStore<Stage>();
-//
-// 	public createStage(name: string): Stage {
-//         const stage = new Stage(name);
-//         this._stages.add(stage);
-// 		return stage;
-//     }
-// }
-//
-// class Entities {
-// 	private _entities: BaseStore<Entity> = new BaseStore<Entity>();
-//
-// 	public createEntity(entityOptions: EntityProperties) {
-// 		const entity: Entity = new Entity(entityOptions);
-// 		this._entities.add(entity);
-// 		return entity;
-// 	}
-// }
 
 export class Game {
     private _stages: BaseStore<Stage> = new BaseStore<Stage>();
@@ -58,7 +39,7 @@ export class Game {
                 return this.addOutput('Who would you like to talk to?');
             }
 
-            const target: Npc = <Npc>this.player.location.entities.find(name);
+            const target: Npc = <Npc>this.player.location.find(name);
 
             if (!target) {
                 return this.addOutput(`Cannot find ${name}`);
@@ -83,7 +64,20 @@ export class Game {
             }
 
             return this.addOutput('Cannot move in that direction');
-        }
+        },
+        attack: (args: string[]) => {
+            const [name] = args.map(item => item.toLowerCase());
+
+            const target: Npc = <Npc>this.player.location.find(name);
+
+            if (!target) {
+                return this.addOutput(`Cannot find ${name}`);
+            }
+
+            const damage = Utils.calculateBaseDamage(this.player.strength, target.defence);
+
+            console.log(damage);
+        },
     }
 
     constructor(

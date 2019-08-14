@@ -1,10 +1,10 @@
 import {
     Npc,
     Entity,
- } from './';
- import { LocationProperties } from './interfaces';
+} from './';
+import { LocationProperties } from './interfaces';
 
- import { BaseStore } from './stores/Base.store';
+import { BaseStore } from './stores/Base.store';
 
 type EntityUnionType = Npc | Entity;
 
@@ -14,7 +14,7 @@ export class Location {
     public readonly id: string;
     public readonly description: string;
     public readonly image: string;
-    public entities: BaseStore<Npc | Entity> = new BaseStore<Npc | Entity>();
+    private _entities: BaseStore<Npc | Entity> = new BaseStore<Npc | Entity>();
     private _coords: [number, number];
 
     constructor(
@@ -25,7 +25,7 @@ export class Location {
         this.image = options.description || '';
         this._coords = options.coords || null;
         if (options.entities) {
-            this.entities.add(options.entities);
+            this._entities.add(options.entities);
         }
     }
 
@@ -35,6 +35,14 @@ export class Location {
 
     public setCoords(x: number, y: number): void {
         this._coords = [x, y];
+    }
+
+    public find(name: string): Npc | Entity {
+        return this._entities.find(name);
+    }
+
+    public get entities(): (Npc | Entity)[] {
+        return this._entities.items;
     }
 
     // public addEntity(entity: EntityUnionType) {
