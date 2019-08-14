@@ -52,7 +52,7 @@ export class Game {
             this.addOutput(<string>target.speech.default);
         },
         walk: (args: string[]) => {
-            const [direction] = args;
+            const [direction] = args.map(item => item.toLowerCase());
             if (!direction) {
                 return this.addOutput('Which direction would you like to walk?');
             }
@@ -82,9 +82,7 @@ export class Game {
 
     constructor(
         private _name: string
-    ) {
-        // super();
-    }
+    ) { }
 
     public get name(): string {
         return this._name;

@@ -7,18 +7,25 @@ export class Entity {
     public name: string;
     public description: string;
     public readonly _game: Game;
-    public actions: {
-        [name: string]: Function,
-    };
+    public actions: string[] = [];
+    private _custom: {
+        [id: string]: any,
+    }
 
     constructor(options: EntityProperties) {
         if (options.actions) {
-            this.actions = {
-                ...this.actions,
+            this.actions = [
                 ...options.actions,
-            }
+            ];
 
             delete options.actions;
+
+            this._custom = {
+                ...this._custom,
+                ...options.custom,
+            }
+
+            delete options.custom;
         }
         Object.assign(this, options);
     }
@@ -37,5 +44,20 @@ export class Entity {
 
     public addAction(name: string, action: Function): void {
         this.actions[name] = action;
+    }
+
+    public get custom(): {
+        [id: string]: any,
+    } {
+        return this._custom;
+    }
+
+    public addCustom(customProperties: {
+        [id: string]: any,
+    }): void {
+        this._custom = {
+            ...this._custom,
+            ...customProperties,
+        }
     }
 }

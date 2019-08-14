@@ -6,11 +6,16 @@ export declare class Entity {
     name: string;
     description: string;
     readonly _game: Game;
-    actions: {
-        [name: string]: Function;
-    };
+    actions: string[];
+    private _custom;
     constructor(options: EntityProperties);
     hasAction(action: string): boolean;
     action(action: string, payload: object): any;
     addAction(name: string, action: Function): void;
+    readonly custom: {
+        [id: string]: any;
+    };
+    addCustom(customProperties: {
+        [id: string]: any;
+    }): void;
 }

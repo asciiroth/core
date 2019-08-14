@@ -5,7 +5,8 @@ export interface EntityProperties {
 	referenceName: string;
 	description: string;
 	_game: Game;
-	actions: {
-		[name: string]: Function;
-	};
+	actions: string[];
+	custom: {
+        [id: string]: any,
+    };
 }
