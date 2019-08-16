@@ -89,7 +89,11 @@ export class Game {
     }
 
     public action(command: string, args: string[]): void {
-        this._actions[command](args);
+        if (this._actions[command]) {
+            return this._actions[command](args);
+        }
+
+        this.addOutput(`Command "${command}" does not exist`);
     }
 
     // Stages
