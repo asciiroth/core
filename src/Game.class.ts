@@ -31,47 +31,47 @@ export class Game {
     private _player: Player;
     private _output: string[] = [];
     private _actions = {
-        talk: (args: string[]): void => {
+        talk: (game: Game, args: string[]): void => {
             // args will be something like ['abby']
             const [name, subject] = args.map(item => item.toLowerCase());
 
             if (!name) {
-                return this.addOutput('Who would you like to talk to?');
+                return game.addOutput('Who would you like to talk to?');
             }
 
-            const target: Npc = <Npc>this.player.location.find(name);
+            const target: Npc = <Npc>game.player.location.find(name);
 
             if (!target) {
-                return this.addOutput(`Cannot find ${name}`);
+                return game.addOutput(`Cannot find ${name}`);
             }
 
             if (target.speech[subject]) {
-                return this.addOutput(<string>target.speech[subject]);
+                return game.addOutput(<string>target.speech[subject]);
             }
 
-            this.addOutput(<string>target.speech.default);
+            game.addOutput(<string>target.speech.default);
         },
-        walk: (args: string[]) => {
+        walk: (game: Game, args: string[]) => {
             const [direction] = args.map(item => item.toLowerCase());
             if (!direction) {
                 return this.addOutput('Which direction would you like to walk?');
             }
 
-            const availableDirections: any = this._player.zone.getAvailableDirections(...this._player.coords);
+            const availableDirections: any = this._player.zone.getAvailableDirections(...game._player.coords);
 
             if (availableDirections[direction]) {
-                return this._player.setLocation(availableDirections[direction]);
+                return game._player.setLocation(availableDirections[direction]);
             }
 
-            return this.addOutput('Cannot move in that direction');
+            return game.addOutput('Cannot move in that direction');
         },
-        attack: (args: string[]) => {
+        attack: (game: Game, args: string[]) => {
             const [name] = args.map(item => item.toLowerCase());
 
-            const target: Npc = <Npc>this.player.location.find(name);
+            const target: Npc = <Npc>game.player.location.find(name);
 
             if (!target) {
-                return this.addOutput(`Cannot find ${name}`);
+                return game.addOutput(`Cannot find ${name}`);
             }
 
             const damage = Utils.calculateBaseDamage(this.player.strength, target.defence);
@@ -90,7 +90,7 @@ export class Game {
 
     public action(command: string, args: string[]): void {
         if (this._actions[command]) {
-            return this._actions[command](args);
+            return this._actions[command](this, args);
         }
 
         this.addOutput(`Command "${command}" does not exist`);
