@@ -18,13 +18,14 @@ export interface Speech {
 export class Npc extends Entity {
     public id: string;
     public hp: number = 5;
+    public maxHp: number = 5;
     public strength: number = 5;
     public defence: number = 5;
     public friendly: boolean = true;
     public speech: Speech = {
         default: 'Hello there',
     };
-    
+
     // public actions: {
     //     [name: string]: Function,
     // } = {
@@ -51,6 +52,10 @@ export class Npc extends Entity {
     constructor(options: NpcProperties) {
         super(options);
         Object.assign(this, options);
+
+        if (!options.maxHp) {
+            this.maxHp = options.hp || this.hp;
+        }
     }
 
     public removeHp(amount: number): number {

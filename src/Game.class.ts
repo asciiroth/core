@@ -76,7 +76,7 @@ export class Game {
 
             const damage = Utils.calculateBaseDamage(this.player.strength, target.defence);
 
-            console.log(damage);
+            target.removeHp(damage);
         },
     }
 

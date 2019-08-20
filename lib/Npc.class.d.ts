@@ -14,6 +14,7 @@ export interface Speech {
 export declare class Npc extends Entity {
     id: string;
     hp: number;
+    maxHp: number;
     strength: number;
     defence: number;
     friendly: boolean;
