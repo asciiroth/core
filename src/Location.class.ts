@@ -16,6 +16,9 @@ export class Location {
     public readonly image: string;
     private _entities: BaseStore<Npc | Entity> = new BaseStore<Npc | Entity>();
     private _coords: [number, number];
+    private _custom: {
+        [id: string]: any;
+    } = {};
 
     constructor(
         options: LocationProperties
@@ -27,6 +30,13 @@ export class Location {
         if (options.entities) {
             this._entities.add(options.entities);
         }
+
+        this._custom = {
+            ...this._custom,
+            ...options.custom,
+        }
+
+        delete options.custom;
     }
 
     public get coords(): [number, number] {
@@ -43,6 +53,21 @@ export class Location {
 
     public get entities(): (Npc | Entity)[] {
         return this._entities.items;
+    }
+
+    public get custom(): {
+        [id: string]: any,
+    } {
+        return this._custom;
+    }
+
+    public addCustom(customProperties: {
+        [id: string]: any,
+    }): void {
+        this._custom = {
+            ...this._custom,
+            ...customProperties,
+        }
     }
 
     // public addEntity(entity: EntityUnionType) {

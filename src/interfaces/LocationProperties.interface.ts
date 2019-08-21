@@ -7,4 +7,7 @@ export interface LocationProperties {
     image?: string;
     entities?: (Npc | Entity)[];
     coords?: [number, number];
+    custom: {
+        [id: string]: any;
+    }
 }
