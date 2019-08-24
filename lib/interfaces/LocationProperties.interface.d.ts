@@ -1,4 +1,4 @@
-import { Npc, Entity } from '../';
+import { Npc, Entity, Zone, Location } from '../';
 export interface LocationProperties {
     name: string;
     id?: number;
@@ -8,5 +8,11 @@ export interface LocationProperties {
     coords?: [number, number];
     custom: {
         [id: string]: any;
+    };
+    customDirections: {
+        [key: string]: {
+            zone?: Zone;
+            location: Location;
+        };
     };
 }

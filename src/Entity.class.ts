@@ -7,19 +7,21 @@ export class Entity {
     public name: string;
     public description: string;
     public readonly _game: Game;
-    public actions: string[] = [];
+    private _actions: string[] = [];
     private _custom: {
         [id: string]: any,
     }
 
     constructor(options: EntityProperties) {
         if (options.actions) {
-            this.actions = [
+            this._actions = [
                 ...options.actions,
             ];
 
             delete options.actions;
+        }
 
+        if (options.custom) {
             this._custom = {
                 ...this._custom,
                 ...options.custom,
@@ -27,29 +29,26 @@ export class Entity {
 
             delete options.custom;
         }
+
         Object.assign(this, options);
     }
 
     public hasAction(action: string): boolean {
-        if (this.actions.includes(action)) {
-            return true;
-        }
-
-        return false;
+        return !!this._actions.includes(action);
     }
 
-    public action(action: string, payload: object) {
-        return this.actions[action](this._game, payload);
-    }
-
-    public addAction(name: string, action: Function): void {
-        this.actions[name] = action;
+    public addAction(name: string): void {
+        this._actions.push(name);
     }
 
     public get custom(): {
         [id: string]: any,
     } {
         return this._custom;
+    }
+
+    public get actions(): string[] {
+        return this._actions;
     }
 
     public addCustom(customProperties: {

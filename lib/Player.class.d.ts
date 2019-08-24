@@ -31,4 +31,26 @@ export declare class Player {
     setClass(playerClass: Class): void;
     removeHp(amount: number): number;
     addHp(amount?: number): number;
+    readonly currentDirections: {
+        north?: {
+            zone?: Zone;
+            location: Location;
+        };
+        east?: {
+            zone?: Zone;
+            location: Location;
+        };
+        south?: {
+            zone?: Zone;
+            location: Location;
+        };
+        west?: {
+            zone?: Zone;
+            location: Location;
+        };
+        [key: string]: {
+            zone?: Zone;
+            location: Location;
+        };
+    };
 }

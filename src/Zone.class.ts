@@ -46,6 +46,7 @@ export class Zone {
             }
         }
 
+        // @ts-ignore
         const locations = grid.flat();
         this.locations = locations;
     }
@@ -59,16 +60,48 @@ export class Zone {
     }
 
     public getAvailableDirections(x: number, y: number): {
-        north?: Location;
-        east?: Location;
-        south?: Location;
-        west?: Location;
+        north?: {
+            zone?: Zone;
+            location: Location;
+        };
+        east?: {
+            zone?: Zone;
+            location: Location;
+        };
+        south?: {
+            zone?: Zone;
+            location: Location;
+        };
+        west?: {
+            zone?: Zone;
+            location: Location;
+        };
+        [key: string]: {
+            zone?: Zone;
+            location: Location;
+        };
     } {
-        const directions: {
-            north?: Location;
-            east?: Location;
-            south?: Location;
-            west?: Location;
+        let directions: {
+            north?: {
+                zone?: Zone;
+                location: Location;
+            };
+            east?: {
+                zone?: Zone;
+                location: Location;
+            };
+            south?: {
+                zone?: Zone;
+                location: Location;
+            };
+            west?: {
+                zone?: Zone;
+                location: Location;
+            };
+            [key: string]: {
+                zone?: Zone;
+                location: Location;
+            };
         } = {};
 
         const directionCoords: {
@@ -84,19 +117,35 @@ export class Zone {
         };
 
         if (this.areCoordsInGrid(...directionCoords.north)) {
-            directions.north = this.getLocationAtCoords(...directionCoords.north);
+            directions.north = {
+                zone: this,
+                location: this.getLocationAtCoords(...directionCoords.north),
+            };
         }
 
         if (this.areCoordsInGrid(...directionCoords.east)) {
-            directions.east = this.getLocationAtCoords(...directionCoords.east);
+            directions.east = {
+                location: this.getLocationAtCoords(...directionCoords.east),
+            };
         }
 
         if (this.areCoordsInGrid(...directionCoords.south)) {
-            directions.south = this.getLocationAtCoords(...directionCoords.south);
+            directions.south = {
+                location: this.getLocationAtCoords(...directionCoords.south),
+            };
         }
 
         if (this.areCoordsInGrid(...directionCoords.west)) {
-            directions.west = this.getLocationAtCoords(...directionCoords.west);
+            directions.west = {
+                location: this.getLocationAtCoords(...directionCoords.west),
+            };
+        }
+
+        const currentLocation = this.getLocationAtCoords(x, y);
+
+        directions = {
+            ...directions,
+            ...currentLocation.customDirections,
         }
 
         return directions;

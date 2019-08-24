@@ -10,9 +10,25 @@ export declare class Zone {
     getLocationAtCoords(x: number, y: number): Location;
     areCoordsInGrid(x: number, y: number): boolean;
     getAvailableDirections(x: number, y: number): {
-        north?: Location;
-        east?: Location;
-        south?: Location;
-        west?: Location;
+        north?: {
+            zone?: Zone;
+            location: Location;
+        };
+        east?: {
+            zone?: Zone;
+            location: Location;
+        };
+        south?: {
+            zone?: Zone;
+            location: Location;
+        };
+        west?: {
+            zone?: Zone;
+            location: Location;
+        };
+        [key: string]: {
+            zone?: Zone;
+            location: Location;
+        };
     };
 }

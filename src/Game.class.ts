@@ -60,7 +60,9 @@ export class Game {
             const availableDirections: any = this._player.zone.getAvailableDirections(...game._player.coords);
 
             if (availableDirections[direction]) {
-                return game._player.setLocation(availableDirections[direction]);
+                game._player.setZone(availableDirections[direction].zone || game.player.zone);
+                game._player.setLocation(availableDirections[direction].location);
+                return;
             }
 
             return game.addOutput('Cannot move in that direction');
@@ -78,6 +80,9 @@ export class Game {
 
             target.removeHp(damage);
         },
+        go: (game: Game, args: string[]) => {
+            this._actions.walk(game, args);
+        },
     }
 
     constructor(
@@ -88,12 +93,18 @@ export class Game {
         return this._name;
     }
 
+    // Actions
+
     public action(command: string, args: string[]): void {
         if (this._actions[command]) {
             return this._actions[command](this, args);
         }
 
         this.addOutput(`Command "${command}" does not exist`);
+    }
+
+    public addAction(command: string, action: Function): void {
+        this._actions[command] = action;
     }
 
     // Stages

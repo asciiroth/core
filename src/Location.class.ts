@@ -1,13 +1,17 @@
 import {
     Npc,
     Entity,
+    Zone,
 } from './';
-import { LocationProperties } from './interfaces';
+import {
+    LocationProperties,
+    WarpPoint,
+    CustomDirection,
+} from './interfaces';
 
 import { BaseStore } from './stores/Base.store';
 
 type EntityUnionType = Npc | Entity;
-
 
 export class Location {
     public readonly name: string;
@@ -18,6 +22,15 @@ export class Location {
     private _coords: [number, number];
     private _custom: {
         [id: string]: any;
+    } = {};
+    private _warpPoints: {
+        [key: string]: WarpPoint,
+    } = {};
+    private _customDirections: {
+        [key: string]: {
+            zone?: Zone,
+            location: Location,
+        },
     } = {};
 
     constructor(
@@ -31,10 +44,17 @@ export class Location {
             this._entities.add(options.entities);
         }
 
-        this._custom = {
-            ...this._custom,
-            ...options.custom,
+        if (options.custom) {
+            this._custom = {
+                ...this._custom,
+                ...options.custom,
+            }
         }
+
+        if (options.customDirections) {
+            this._customDirections = options.customDirections;
+        }
+
 
         delete options.custom;
     }
@@ -68,6 +88,32 @@ export class Location {
             ...this._custom,
             ...customProperties,
         }
+    }
+
+    public addWarpPoint(warpPoint: WarpPoint) {
+        this._warpPoints[warpPoint.direction] = warpPoint;
+    }
+
+    public addCustomDirection(customDirection: CustomDirection) {
+        this._customDirections[customDirection.direction] = {
+            location: customDirection.location,
+            zone: customDirection.zone || undefined,
+        }
+    }
+
+    public get warpPoints(): {
+        [key: string]: WarpPoint,
+    } {
+        return this._warpPoints;
+    }
+
+    public get customDirections(): {
+        [key: string]: {
+            zone?: Zone,
+            location: Location,
+        },
+    } {
+        return this._customDirections;
     }
 
     // public addEntity(entity: EntityUnionType) {

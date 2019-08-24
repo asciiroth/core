@@ -17,6 +17,7 @@ export declare class Game {
     constructor(_name: string);
     readonly name: string;
     action(command: string, args: string[]): void;
+    addAction(command: string, action: Function): void;
     readonly stage: string;
     readonly stages: BaseStore<Stage>;
     addStage(name: string): Stage;

@@ -145,4 +145,29 @@ export class Player {
 
         return this.hp = this.maxHp;
     }
+
+    public get currentDirections(): {
+        north?: {
+            zone?: Zone;
+            location: Location;
+        };
+        east?: {
+            zone?: Zone;
+            location: Location;
+        };
+        south?: {
+            zone?: Zone;
+            location: Location;
+        };
+        west?: {
+            zone?: Zone;
+            location: Location;
+        };
+        [key: string]: {
+            zone?: Zone;
+            location: Location;
+        };
+    } {
+        return this.zone.getAvailableDirections(...this.location.coords);
+    }
 }
